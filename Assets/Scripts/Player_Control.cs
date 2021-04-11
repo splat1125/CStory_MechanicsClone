@@ -20,6 +20,7 @@ public class Player_Control : MonoBehaviour
     bool movingRight = false;
 
     public float JumpForce = 1f;
+    public float ArtificialGravity = 1f;
 
     void Start()
     {
@@ -32,6 +33,7 @@ public class Player_Control : MonoBehaviour
         DetermineMovement();
         HorizontalMovement();
         if (jumpInput) Jumping();
+        if (fallInput) Falling();
     }
 
     void RegisterInputs()
@@ -39,7 +41,7 @@ public class Player_Control : MonoBehaviour
         leftInput = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
         rightInput = Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D);
         jumpInput = Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W);
-        fallInput = Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S);
+        fallInput = Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S);
     }
 
     void DetermineMovement()
@@ -73,6 +75,7 @@ public class Player_Control : MonoBehaviour
     {
         if (Grounded)
         {
+            rb.velocity = Vector3.zero;
             rb.AddForce(0, JumpForce, 0);
             Grounded = false;
 
@@ -85,5 +88,11 @@ public class Player_Control : MonoBehaviour
         {
             Grounded = WallDetection(Vector3.down);
         }
+        rb.AddForce(0, -ArtificialGravity, 0);
+    }
+
+    void Falling()
+    {
+        rb.AddForce(0, -JumpForce * 2, 0);
     }
 }

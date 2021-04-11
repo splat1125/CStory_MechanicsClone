@@ -424,7 +424,8 @@ MonoBehaviour:
   GroundSpeed: 8
   Grounded: 1
   RaycastDistance: 0.5
-  JumpForce: 400
+  JumpForce: 1250
+  ArtificialGravity: 50
 --- !u!1 &1776789410
 GameObject:
   m_ObjectHideFlags: 0
